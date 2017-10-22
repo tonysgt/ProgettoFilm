@@ -1,0 +1,31 @@
+﻿.testtable {
+    border-collapse: collapse;
+    width: 100%;
+   
+}
+
+
+
+.testtable td, .testtable th  {
+  border: 1px solid black;
+   padding: 8px;
+}
+
+.testtable tr:hover {
+   background-color: #66B2FF
+}
+
+.testtable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+    .testtable img {
+        display: block;
+        margin: auto;
+        max-width: 80px;
+    }
+

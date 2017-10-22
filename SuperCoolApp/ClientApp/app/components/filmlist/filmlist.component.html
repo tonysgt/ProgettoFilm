@@ -1,0 +1,38 @@
+<h1>Film List</h1>
+
+<p *ngIf="!films"><em>Loading...</em></p>
+
+<table class='table' *ngIf="films">
+    <thead>
+        <tr>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>film di prova</td>
+        </tr>
+        <tr *ngFor="let film of films">
+            <td>{{ films.title }}</td>
+            
+        </tr>
+    </tbody>
+</table>
+<table class='testtable'>
+    <thead>
+        <tr>
+            <th width="25%">Locandina</th>
+            <th width="75%">Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td width="25%"><img src="https://mr.comingsoon.it/imgdb/locandine/big/5603.jpg" alt="Smiley face" ></td>
+            <td width="75%">film di prova</td>
+        </tr>
+        <tr>
+            <td width="25%"></td>
+            <td width="75%">film di prova2</td>
+        </tr>
+    </tbody>
+</table>

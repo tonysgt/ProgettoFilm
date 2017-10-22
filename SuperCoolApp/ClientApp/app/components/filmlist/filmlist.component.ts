@@ -7,11 +7,11 @@ import { Http } from '@angular/http';
     styleUrls: ['./filmlist.component.css'] 
 })
 export class FilmsComponent {
-    public films: FilmMin[];
+    public films: Film[];
 
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
         http.get(baseUrl + 'api/films').subscribe(result => { //urlapi da definire
-            this.films = result.json() as FilmMin[];
+            this.films = result.json() as Film[];
         }, error => console.error(error));
     }
 }
@@ -23,11 +23,12 @@ interface FilmMin { //Gestisce le informazioni da mostrare nella lista dei film 
 }
 
 interface Film { //Per la gestione dei dettagli di un film
-    id: number;
-    title: string;
-    runtime: number;
-    year: number;
-    genre: string;
-    director: string;
-    description: string;
+    filmID: number;
+    nomeFilm: string;
+    genere: string;
+    regista: string;
+    descrizione: string;
+    durata: number;
+    anno: number;
+    visti: any;
 }

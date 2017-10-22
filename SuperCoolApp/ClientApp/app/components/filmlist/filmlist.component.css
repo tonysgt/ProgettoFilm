@@ -1,31 +1,73 @@
-﻿.testtable {
+﻿
+
+.testtable {
     border-collapse: collapse;
-    width: 100%;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    
+}
    
+   
+.testtable button:hover {
+    background-color: #0066cc; 
+    color: white;
+    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 
 
-.testtable td, .testtable th  {
-  border: 1px solid black;
-   padding: 8px;
+.testtable button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
-.testtable tr:hover {
-   background-color: #66B2FF
+.testtable img {
+    max-width: 80px;
+}
+
+.testtable tr:nth-child(even) {
+   background-color: #f2f2f2
+}
+
+.testtable td, .testtable th {
+   border: 1px solid #E0E0E0;
+   padding: 4px;
 }
 
 .testtable th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
+    background-color: #0080ff;
     color: white;
 }
 
-    .testtable img {
-        display: block;
-        margin: auto;
-        max-width: 80px;
+
+
+    .testtable td {
+        font-size: 20px;
+        
     }
+
+.testtable button {
+        background-color: #0080ff;
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        margin: 8px 4px;
+        display: inline-block;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        font-size: 12px;
+}
+.col1 {
+    white-space: nowrap;
+}
+
+.col2{
+    width: 100%;
+}
+ 
 

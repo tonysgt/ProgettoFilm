@@ -10,8 +10,9 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
-import {  FilmsComponent } from './components/filmlist/filmlist.component';
-import { CoursesComponent } from './components/courses/courses.component';
+import { FilmsComponent } from './components/filmlist/film-list.component';
+import { MyFilmsComponent } from './components/myfilms/myfilms.component';
+import { FilmDetailsComponent } from './components/filmdetails/film-details.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { CoursesComponent } from './components/courses/courses.component';
         NavMenuComponent,
         HomeComponent,
         FilmsComponent,
-		CoursesComponent
+        MyFilmsComponent,
+        FilmDetailsComponent
     ],
     imports: [
         CommonModule,
@@ -28,8 +30,9 @@ import { CoursesComponent } from './components/courses/courses.component';
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
-            { path: 'filmlist', component: FilmsComponent },
-			{ path: 'courses', component: CoursesComponent },
+            { path: 'film-list', component: FilmsComponent },
+            { path: 'myfilms', component: MyFilmsComponent },
+            { path: 'film-details/:id', component: FilmDetailsComponent },
             { path: '**', redirectTo: 'home' }
 			
         ])

@@ -1,0 +1,27 @@
+﻿<h1>Dettagli Film</h1>
+
+<p *ngIf="!film"><em>Loading...</em></p>
+
+<div *ngIf="film">
+    <div class="row">
+        <div class="col-sm-4">
+            <img src="http://cultura.biografieonline.it/wp-content/uploads/2012/05/Titanic-locandina-film.jpg" class="img-responsive">
+        </div>
+        <div id="filminfo" class="col-sm-7">
+            <ul>
+                <li>Titolo: {{ film.nomeFilm }}</li>
+                <li>Durata: {{ film.durata }}</li>
+                <li>Genere: {{ film.genere }}</li>
+                <li>Regista: {{ film.regista }}</li>
+                <li>Anno: {{ film.anno }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row" style="margin:15px;">
+        <p>{{ film.descrizione}}</p>
+        <div>
+            <button (click)="goBack();">Back</button>
+            <button style="position:relative; float:right;">Add</button>
+        </div>
+    </div>   
+</div>

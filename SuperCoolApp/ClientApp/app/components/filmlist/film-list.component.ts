@@ -2,9 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 
 @Component({
-    selector: 'filmlist',
-    templateUrl: './filmlist.component.html',
-    styleUrls: ['./filmlist.component.css'] 
+    selector: 'film-list',
+    templateUrl: './film-list.component.html',
+    styleUrls: ['./film-list.component.css'] 
 })
 export class FilmsComponent {
     public films: Film[];

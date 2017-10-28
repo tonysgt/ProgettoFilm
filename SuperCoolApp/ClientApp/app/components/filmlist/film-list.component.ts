@@ -14,12 +14,14 @@ export class FilmsComponent {
         private router: Router,
         http: Http,
         @Inject('BASE_URL') baseUrl: string) {
+        console.log(baseUrl + 'api/films');
         http.get(baseUrl + 'api/films').subscribe(result => { //urlapi da definire
             this.films = result.json() as Film[];
         }, error => console.error(error));
     }
 
-    gotoDetail(id: number): void {
+    gotoDetail(id: string): void {
+        console.log(id);
         this.router.navigate(['/film-details', id]);
     }
 }
@@ -31,12 +33,12 @@ interface FilmMin { //Gestisce le informazioni da mostrare nella lista dei film 
 }
 
 interface Film { //Per la gestione dei dettagli di un film
-    filmID: number;
-    nomeFilm: string;
-    genere: string;
-    regista: string;
-    descrizione: string;
-    durata: number;
-    anno: number;
-    visti: any;
+    _id: string;
+    NomeFilm: string;
+    Descrizione: string;
+    Durata: number;
+    Regista: string;
+    Categoria: string;
+    Anno: number;
+    Copertina: any;
 }

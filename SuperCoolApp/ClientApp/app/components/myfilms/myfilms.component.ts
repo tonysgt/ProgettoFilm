@@ -14,7 +14,7 @@ export class MyFilmsComponent {
     constructor(
         private router: Router,
         http: Http, @Inject('BASE_URL') baseUrl: string) {
-        http.get(baseUrl + 'api/myfilms').subscribe(result => { //api da definire
+        http.get(baseUrl + 'api/films').subscribe(result => { //api da definire
             this.filmpreviews = result.json() as FilmPreview[];
         }, error => console.error(error));
     }

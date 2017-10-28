@@ -1,4 +1,4 @@
-<h1>Film List</h1>
+<h1>Lista Film</h1>
 
 <p *ngIf="!films"><em>Loading...</em></p>
 
@@ -14,7 +14,7 @@
         <tr *ngFor="let film of films">
             <td class="col1" ><img src="http://cultura.biografieonline.it/wp-content/uploads/2012/05/Titanic-locandina-film.jpg"></td>
             <td class="col2" >{{ film.nomeFilm }}</td>
-            <td><button (click)="gotoDetail(film.filmID)">Info</button><button>Add</button></td>
+            <td><button (click)="gotoDetail(film._id)">Info</button><button>Add</button></td>
         </tr>
     </tbody>
 </table>

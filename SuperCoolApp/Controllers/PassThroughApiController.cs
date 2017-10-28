@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Text;
+using System.Net.Http.Headers;
 
 namespace SuperCoolApp.Controllers
 {
@@ -56,6 +59,15 @@ namespace SuperCoolApp.Controllers
 
         private async Task<IActionResult> SendAsync(HttpMethod method)
         {
+
+            Console.WriteLine(method);
+            //Console.WriteLine(Request.Headers);
+            //Console.WriteLine("Messaggi vari fuori try");
+            //foreach (var header in Request.Headers)
+            //{
+            //    Console.WriteLine(header);
+            //}
+            
             try
             {
                 //var serviceApiUri = new Uri(baseAddress);
@@ -64,18 +76,49 @@ namespace SuperCoolApp.Controllers
                 string pathAndQuery = path + Request.QueryString;
               
                 var uri = new Uri(baseAddress+pathAndQuery);
-
-                HttpRequestMessage request = new HttpRequestMessage(method, uri);
-
-                //copy original headers
-                foreach(var header in Request.Headers)
+                foreach (var header in Request.Headers)
                 {
-                    request.Headers.Add(header.Key, header.Value.ToArray());
+                    Console.WriteLine(header);
                 }
+                    HttpRequestMessage request = new HttpRequestMessage(method, uri);
+                if (method == HttpMethod.Put || method == HttpMethod.Post)
+                {
+                    using (Stream receiveStream = Request.Body)
+                    {
+                        string documentContents;
+                        using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8))
+                        {
+                            documentContents = readStream.ReadToEnd();
+                        }
+                        Console.WriteLine(documentContents);
+                        request.Content = new StringContent(documentContents);
+                    }
+                }
+                //copy original headers
+                Console.WriteLine("Sto copiando gli headers");
+                Console.WriteLine(Request.Headers.Keys.ToArray());
 
-                //copy content
-                //if (method == HttpMethod.Put || method == HttpMethod.Post)
-                //  request.Content = Request.Body;
+                foreach (var header in Request.Headers)
+                {
+                    //request.Headers.Add(header.Key, header.Value.ToArray());
+                    Console.WriteLine(header);
+                    //request.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());
+                    if (header.Key != "Content-Type" && header.Key != "Content-Length")
+                    {
+                        request.Headers.Add(header.Key, header.Value.ToArray());
+                    }
+
+                    else
+                    {
+                        
+                        if(header.Key == "Content-Type")
+                          request.Content.Headers.ContentType = new MediaTypeHeaderValue(header.Value);
+                        if (header.Key == "Content-Length")
+                            request.Content.Headers.Add(header.Key, header.Value.ToArray());
+                    }
+
+
+                }
 
                 var httpResponse = await http.SendAsync(request);
                 if(httpResponse.IsSuccessStatusCode)
@@ -91,6 +134,7 @@ namespace SuperCoolApp.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
         }

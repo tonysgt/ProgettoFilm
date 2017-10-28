@@ -3,9 +3,6 @@
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     
 }
-   
-   
-
 
 .testtable img {
     max-width: 80px;
@@ -38,7 +35,7 @@
         background-color: #0080ff;
         border: none;
         color: white;
-        /*padding: 10px 24px;*/
+        padding: 10px 24px;
         text-align: center;
         text-decoration: none;
         margin: 8px 4px;

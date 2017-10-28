@@ -1,6 +1,6 @@
-﻿import { Component, OnInit, Inject } from '@angular/core';
+﻿import { Component, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import {  ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
@@ -16,7 +16,7 @@ import 'rxjs/add/operator/switchMap';
 
 export class FilmDetailsComponent  {
     film: Film;
-    id: number;
+    id: string;
     url: string;
 
     constructor(
@@ -25,8 +25,9 @@ export class FilmDetailsComponent  {
         
         private http: Http, @Inject('BASE_URL') public baseUrl: string) { 
             this.route.params.subscribe(params => {
-                this.id = +params['id'];
-                this.url = this.baseUrl + 'api/film?IDFilm='+this.id;
+                this.id = params['id'];
+                this.url = this.baseUrl + 'api/film?IDFilm=' + this.id;
+                
                 this.http.get(this.url).subscribe(result => { //urlapi da definire
                 this.film = result.json() as Film;
                     }, error => console.error(error));
@@ -34,29 +35,7 @@ export class FilmDetailsComponent  {
 
     }
 
-    ngOnInit(): void {
-       
-            //this.http.get(this.baseurl + 'api/film?idfilm=${this.id}').subscribe(result => { //urlapi da definire
-            //    this.film = result.json() as film;
-            //}, error => console.error(error));
-
-       
-    }
-    //    //this.route.paramMap
-    //    //    .switchMap((params: ParamMap) => this.filmDetailsService.getFilmDetails(+params.get('id')))
-    //    //    .subscribe(film => this.film = film);
-
-
-    //    this.route.params.subscribe(params =>
-    //        this.id = +params['id']);
-
-    //    const url = `${this.baseUrl}/api/film?IDFilm=${this.id}`;
-    //    this.http.get(url).subscribe(result => { //urlapi da definire
-    //        this.film = result.json() as Film;
-    //    }, error => console.error(error));
-        
-        
-    //}
+   
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
@@ -68,12 +47,12 @@ export class FilmDetailsComponent  {
 }
 
 interface Film { //Per la gestione dei dettagli di un film
-    filmID: number;
-    nomeFilm: string;
-    genere: string;
-    regista: string;
-    descrizione: string;
-    durata: number;
-    anno: number;
-    visti: any;
+    //filmID: number;
+    //nomeFilm: string;
+    //genere: string;
+    //regista: string;
+    //descrizione: string;
+    //durata: number;
+    //anno: number;
+    //visti: any;
 }

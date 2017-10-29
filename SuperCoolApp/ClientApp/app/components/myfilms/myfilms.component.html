@@ -1,8 +1,8 @@
 <h1>I miei film</h1>
 
-<p *ngIf="!filmpreviews"></p>
+<p *ngIf="!films"><em>Non hai aggiunto nessun film</em></p>
 
-<table class='testtable' *ngIf="films">
+<table class='filmtable' *ngIf="films">
     <thead>
         <tr>
             <th>Locandina</th>
@@ -11,14 +11,14 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let filmpreview of filmpreviews">
+        <tr *ngFor="let film of films">
             <td class="col1"><img src="http://cultura.biografieonline.it/wp-content/uploads/2012/05/Titanic-locandina-film.jpg"></td>
-            <td class="col2">{{ filmpreview.name }}</td>
-            <td><button (click)="gotoDetail(filmpreview)">Info</button><button>Remove</button></td>
+            <td class="col2">{{ film.nomeFilm }}</td>
+            <td><button (click)="gotoDetail(film._id)">Info</button><button (click)="removeFromMyFilms(film._id)">Remove</button></td>
         </tr>
     </tbody>
 </table>
-<table class='filmtable' >
+<!--<table class='filmtable' >
     <thead>
         <tr>
             <th>Locandina</th>
@@ -33,4 +33,4 @@
             <td><button (click)="gotoDetail(4)">Info</button><button>Remove</button></td>
         </tr>
     </tbody>
-</table>
+</table>-->

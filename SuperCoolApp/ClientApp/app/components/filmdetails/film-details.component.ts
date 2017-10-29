@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/switchMap';
 
-//import { Film } from './film';
+import { Film } from '../_models/film';
 
 @Component({
     selector: 'film-details',
@@ -46,13 +46,3 @@ export class FilmDetailsComponent  {
     }
 }
 
-interface Film { //Per la gestione dei dettagli di un film
-    //filmID: number;
-    //nomeFilm: string;
-    //genere: string;
-    //regista: string;
-    //descrizione: string;
-    //durata: number;
-    //anno: number;
-    //visti: any;
-}

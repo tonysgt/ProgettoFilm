@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
     model: any = {};
     loading = false;
     returnUrl: string;
-  
+    tellmesomething: string;
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         // reset login status
-        this.authenticationService.logout();
-      
+        //this.authenticationService.logout();
+        this.tellmesomething="supercalifragi"
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
@@ -35,10 +35,10 @@ export class HomeComponent implements OnInit {
             .subscribe(
             data => {
                 this.router.navigate(['/myfilms']);
-               
+                this.tellmesomething = "bananaspritz";
             },
             error => {
-               
+                this.tellmesomething = "fragolaflambe";
                 console.log(error);
                 this.loading = false;
             });

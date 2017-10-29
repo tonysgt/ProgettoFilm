@@ -11,10 +11,12 @@ import { HomeComponent } from './components/home/home.component';
 import { FilmsComponent } from './components/filmlist/film-list.component';
 import { MyFilmsComponent } from './components/myfilms/myfilms.component';
 import { FilmDetailsComponent } from './components/filmdetails/film-details.component';
-import { RegisterComponent} from './components/register/register.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AlertComponent } from './components/_directives/alert.component';
+
 import { AuthenticationService } from './components/_services/authentication.service';
 import { AlertService } from './components/_services/alert.service';
-
+import { RegistrationService } from './components/_services/registration.service';
 
 
 @NgModule({
@@ -23,9 +25,9 @@ import { AlertService } from './components/_services/alert.service';
         NavMenuComponent,
         HomeComponent,
         FilmsComponent,
+        AlertComponent,
         MyFilmsComponent,
         FilmDetailsComponent,
-        
         RegisterComponent
     ],
     imports: [
@@ -43,7 +45,7 @@ import { AlertService } from './components/_services/alert.service';
 			
         ])
     ],
-    providers: [AlertService,AuthenticationService]
+    providers: [AlertService, AuthenticationService, RegistrationService]
     
 })
 export class AppModuleShared {

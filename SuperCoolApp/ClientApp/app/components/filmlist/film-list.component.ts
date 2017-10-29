@@ -1,17 +1,20 @@
 import { Component, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { User } from '../_models/user';
+import { RegistrationService } from '../_services/registration.service';
 
 @Component({
     selector: 'film-list',
     templateUrl: './film-list.component.html',
-    styleUrls: ['./film-list.component.css'] 
+    styleUrls: ['./film-list.component.css'],
 })
 export class FilmsComponent {
     public films: Film[];
 
     constructor(
         private router: Router,
+        private regService: RegistrationService,
         http: Http,
         @Inject('BASE_URL') baseUrl: string) {
         console.log(baseUrl + 'api/films');
@@ -24,15 +27,42 @@ export class FilmsComponent {
         console.log(id);
         this.router.navigate(['/film-details', id]);
     }
+
+    addToMyFilms(id: string): void {
+       
+        var currentUser = window.localStorage.getItem('currentUser');
+        console.log(currentUser);
+        if (currentUser != null) {
+            var user = JSON.parse(currentUser) as User;
+            console.log(user.filmVisti);
+
+            if (user.filmVisti.find(x => x == id) === undefined) {
+                user.filmVisti.push(id);
+                console.log(user.filmVisti);
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.regService.update(user)
+                    .subscribe(
+                    data => {
+                        //this.alertService.success('Registration successful', true);
+                        this.router.navigate(['/myfilms']);
+                    },
+                    error => {
+                        //this.alertService.error(error);
+                        //this.loading = false;
+                    });
+            }
+            else
+            {
+                console.log("elemento già presente");
+            }
+        }
+    }
 }
 
 
-interface FilmMin { //Gestisce le informazioni da mostrare nella lista dei film visti
-    id: number;
-    title: string;
-}
 
-interface Film { //Per la gestione dei dettagli di un film
+
+class Film { //Per la gestione dei dettagli di un film
     _id: string;
     NomeFilm: string;
     Descrizione: string;

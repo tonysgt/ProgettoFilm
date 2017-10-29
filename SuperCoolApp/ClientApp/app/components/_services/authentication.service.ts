@@ -21,11 +21,11 @@ export class AuthenticationService {
                 let user = response.json();
 
                 console.log(user);
-                if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
-
+                //if (user && user.token) {
+                //    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    window.localStorage.setItem('currentUser', JSON.stringify(user));
+                //}
+                console.log(localStorage.getItem('currentUser'));
                 return user;
             });
     }

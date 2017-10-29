@@ -2,7 +2,7 @@
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
-import { Film } from './film';
+import { Film } from '../_models/film';
 
 export class FilmDetailsService{
 

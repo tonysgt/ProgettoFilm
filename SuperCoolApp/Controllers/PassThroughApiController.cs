@@ -110,7 +110,6 @@ namespace SuperCoolApp.Controllers
 
                     else
                     {
-                        
                         if(header.Key == "Content-Type")
                           request.Content.Headers.ContentType = new MediaTypeHeaderValue(header.Value);
                         if (header.Key == "Content-Length")

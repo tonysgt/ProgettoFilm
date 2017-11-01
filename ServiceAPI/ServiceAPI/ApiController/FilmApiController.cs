@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using MongoDB.Driver;
 using ServiceAPI.Entities;
-using System.Collections.Generic;
 
 namespace ServiceAPI
 {
@@ -21,6 +20,7 @@ namespace ServiceAPI
             collection = Database.getIstance().getFilms();
         }
 
+        //Tale funzione si occupa di restituire i dati dei film presenti in IDFilms.
         [HttpGet("films/many")]
         public async Task<IActionResult> GetManyFilms([FromQuery]string[] IDFilms)
         {
@@ -43,6 +43,7 @@ namespace ServiceAPI
             }
         }
 
+        //Utilizzata per ottenere tutti i film presenti nel DB
         [HttpGet("films")]
         public async Task<IActionResult> GetFilms()
         {
@@ -58,6 +59,7 @@ namespace ServiceAPI
             }
         }
         
+        //Utilizzata per ottenere in dettaglio i dati di un singolo Film
         [HttpGet("film")]
         public async Task<IActionResult> GetFilm([FromQuery]string IDFilm)
         {
@@ -79,7 +81,7 @@ namespace ServiceAPI
             }
         }
 
-
+        //Usata per l'inserimento nel db di un nuovo film
         [HttpPut("film")]
         public async Task<IActionResult> CreateFilm([FromBody]Film film)
         {
@@ -97,7 +99,7 @@ namespace ServiceAPI
             
         }
 
-
+        //utilizzata per la modifica dei dati relativi ad un film
         [HttpPost("film")]
         public async Task<IActionResult> UpdateFilm([FromBody]Film film)
         {
@@ -119,6 +121,7 @@ namespace ServiceAPI
             }
         }
 
+        //utilizzata per rimuovere un film dal DB
         [HttpDelete("film")]
         public async Task<IActionResult> DeleteFilm([FromQuery]string IDFilm)
         {

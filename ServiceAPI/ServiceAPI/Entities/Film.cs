@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ServiceAPI.Entities
 {
+    //Tale classe rappresenta l'entità film all'interno del DB Mongo
     public class Film
     {
         [BsonRepresentation(BsonType.ObjectId)]

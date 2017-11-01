@@ -22,7 +22,8 @@ namespace ServiceAPI
             collection = Database.getIstance().getUsers();
         }
 
-        [HttpGet("users")]
+        //Ottengo tutti i dati degli utenti presenti nel DB. Utile per scopi di debug
+        [HttpGet("users")] 
         public async Task<IActionResult> GetUsers()
         {
             try
@@ -37,11 +38,15 @@ namespace ServiceAPI
             }
         }
 
+        //Classe di appoggio per la ricezione dei dati per il LogIn da parte del Front-End tramine json
         public class DatiLogIn{
             public string Email { get; set; }
             public string Password { get; set; }
         }
 
+        /*Ha lo scopo di simulare la funzione di LonIn di un utente restituento tutti i relativi dati
+         *per l'elaborazione da parte del front-end 
+        */
         [HttpPost("user/LogIn")]
         public async Task<IActionResult> GetUser([FromBody]DatiLogIn dati)
         {
@@ -49,14 +54,12 @@ namespace ServiceAPI
             {
                 await parallelism.WaitAsync();
                 var user = await collection.FindAsync(u => u.Email==dati.Email && u.Password==dati.Password);
-                if (user == null)
-                    return NotFound();
                 return Ok(user.First());
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return NotFound();
+                return Unauthorized();
             }
             finally
             {
@@ -64,6 +67,7 @@ namespace ServiceAPI
             }
         }
         
+        //Usata per la registrazione dei nuovi utenti
         [HttpPut("user")]
         public async Task<IActionResult> CreateUser([FromBody]User user)
         {
@@ -71,7 +75,10 @@ namespace ServiceAPI
             {
                 await parallelism.WaitAsync();
                 user.filmVisti = new List<string>();
-                await collection.InsertOneAsync(user);               
+                var utente = collection.Find(u => u.Email == user.Email);
+                if (utente.Count()>0)
+                    return Unauthorized();
+                await collection.InsertOneAsync(user);
                 return Ok();
             }
             finally
@@ -80,7 +87,7 @@ namespace ServiceAPI
             }
         }
         
-
+        //usata per modificare i dati dell'utente
         [HttpPost("user")]
         public async Task<IActionResult> UpdateUser([FromBody]User user)
         {
@@ -98,6 +105,7 @@ namespace ServiceAPI
             }
         }
 
+        //usata per l'eliminazione di un utente
         [HttpDelete("user")]
         public async Task<IActionResult> DeleteUser([FromQuery]string IDUser)
         {
@@ -113,6 +121,25 @@ namespace ServiceAPI
             {
                 Console.WriteLine(e.Message);
                 return NotFound();
+            }
+            finally
+            {
+                parallelism.Release();
+            }
+        }
+
+        //utilizzata per ottenere i film non visti da un utente
+        [HttpGet("user/films")]
+        public async Task<IActionResult> GetUserFilms([FromQuery]string IDUser)
+        {
+            try
+            {
+                await parallelism.WaitAsync();
+                var user = collection.Find(u => u._id == IDUser).First();
+                if (user == null)
+                    return NotFound();
+                var listafilm = Database.getIstance().getFilms().AsQueryable().Where(f=> !user.filmVisti.Contains(f._id));
+                return Ok(listafilm.ToList());
             }
             finally
             {

@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading;
 using MongoDB.Driver;
 using ServiceAPI.Entities;
+using System.Net;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ServiceAPI
 {
@@ -88,6 +91,10 @@ namespace ServiceAPI
             try
             {
                 await parallelism.WaitAsync();
+                var presente = collection.Find(f => f.NomeFilm == film.NomeFilm);
+                if (presente.Count() > 0)
+                    return Unauthorized();
+
                 await collection.InsertOneAsync(film);
                 return Ok();
             }
@@ -138,5 +145,6 @@ namespace ServiceAPI
                 parallelism.Release();
             }
         }
+
     }
 }

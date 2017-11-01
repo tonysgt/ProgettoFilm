@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using System;
 
 namespace ServiceAPI
 {
@@ -17,9 +18,6 @@ namespace ServiceAPI
                 .Build();
 
             host.Run();
-
-
-            
             
         }
     }

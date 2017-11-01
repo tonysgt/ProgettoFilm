@@ -1,5 +1,5 @@
-﻿import { Injectable, Inject } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+﻿import { Inject } from '@angular/core';
+import { Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 import { Film } from '../_models/film';

@@ -59,28 +59,17 @@ namespace SuperCoolApp.Controllers
 
         private async Task<IActionResult> SendAsync(HttpMethod method)
         {
-
-            Console.WriteLine(method);
-            //Console.WriteLine(Request.Headers);
-            //Console.WriteLine("Messaggi vari fuori try");
-            //foreach (var header in Request.Headers)
-            //{
-            //    Console.WriteLine(header);
-            //}
-            
             try
             {
-                //var serviceApiUri = new Uri(baseAddress);
-
+               
                 string path = Request.Path.Value.Replace("/api/", "");
                 string pathAndQuery = path + Request.QueryString;
               
                 var uri = new Uri(baseAddress+pathAndQuery);
-                foreach (var header in Request.Headers)
-                {
-                    Console.WriteLine(header);
-                }
-                    HttpRequestMessage request = new HttpRequestMessage(method, uri);
+                
+                HttpRequestMessage request = new HttpRequestMessage(method, uri);
+
+                //copy original body
                 if (method == HttpMethod.Put || method == HttpMethod.Post)
                 {
                     using (Stream receiveStream = Request.Body)
@@ -90,24 +79,17 @@ namespace SuperCoolApp.Controllers
                         {
                             documentContents = readStream.ReadToEnd();
                         }
-                        Console.WriteLine(documentContents);
                         request.Content = new StringContent(documentContents);
                     }
                 }
-                //copy original headers
-                Console.WriteLine("Sto copiando gli headers");
-                Console.WriteLine(Request.Headers.Keys.ToArray());
 
+                //copy original headers
                 foreach (var header in Request.Headers)
                 {
-                    //request.Headers.Add(header.Key, header.Value.ToArray());
-                    Console.WriteLine(header);
-                    //request.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());
                     if (header.Key != "Content-Type" && header.Key != "Content-Length")
                     {
                         request.Headers.Add(header.Key, header.Value.ToArray());
                     }
-
                     else
                     {
                         if(header.Key == "Content-Type")

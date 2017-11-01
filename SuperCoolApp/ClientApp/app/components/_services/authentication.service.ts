@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map'
 export class AuthenticationService {
     url: string;
     private headers = new Headers({ 'Content-Type': 'application/json' });
+
     constructor(private http: Http, @Inject('BASE_URL')public baseUrl: string) { }
 
     login(email: string, password: string) {
@@ -32,6 +33,9 @@ export class AuthenticationService {
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        if (typeof window.localStorage !== "undefined") {
+            window.localStorage.removeItem('currentUser');
+        }
+        return true;
     }
 }

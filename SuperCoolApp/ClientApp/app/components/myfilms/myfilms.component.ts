@@ -14,7 +14,7 @@ import { User } from '../_models/user';
 export class MyFilmsComponent {
     public films: Film[];
     user: User;
-    localStorage: Storage;
+    
     filmvisti: string[]
 
 
@@ -73,7 +73,7 @@ export class MyFilmsComponent {
             var index = user.filmVisti.indexOf(id);
             user.filmVisti.splice(index, 1);
             console.log(user.filmVisti);
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            window.localStorage.setItem('currentUser', JSON.stringify(user));
             this.regService.update(user)
                 .subscribe(
                 data => {

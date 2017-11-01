@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { User } from '../_models/user';
 import { RegistrationService } from '../_services/registration.service';
+import { MyFilmsService } from '../_services/myfilms.service';
 
 @Component({
     selector: 'film-list',
@@ -11,16 +12,23 @@ import { RegistrationService } from '../_services/registration.service';
 })
 export class FilmsComponent {
     public films: Film[];
+    isadded = false;
+    filterargs: string[]; 
+
 
     constructor(
         private router: Router,
         private regService: RegistrationService,
+        private myFilmsService: MyFilmsService,
         http: Http,
         @Inject('BASE_URL') baseUrl: string) {
         console.log(baseUrl + 'api/films');
+        
         http.get(baseUrl + 'api/films').subscribe(result => { //urlapi da definire
             this.films = result.json() as Film[];
         }, error => console.error(error));
+       
+       
     }
 
     gotoDetail(id: string): void {
@@ -29,13 +37,11 @@ export class FilmsComponent {
     }
 
     addToMyFilms(id: string): void {
-       
         var currentUser = window.localStorage.getItem('currentUser');
         console.log(currentUser);
         if (currentUser != null) {
             var user = JSON.parse(currentUser) as User;
             console.log(user.filmVisti);
-
             if (user.filmVisti.find(x => x == id) === undefined) {
                 user.filmVisti.push(id);
                 console.log(user.filmVisti);
@@ -43,16 +49,16 @@ export class FilmsComponent {
                 this.regService.update(user)
                     .subscribe(
                     data => {
-                        //this.alertService.success('Registration successful', true);
+                        
                         this.router.navigate(['/myfilms']);
                     },
                     error => {
-                        //this.alertService.error(error);
-                        //this.loading = false;
+                        
                     });
             }
             else
             {
+                this.isadded = true;
                 console.log("elemento già presente");
             }
         }

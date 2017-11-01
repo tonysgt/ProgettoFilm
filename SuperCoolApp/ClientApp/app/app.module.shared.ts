@@ -12,23 +12,28 @@ import { FilmsComponent } from './components/filmlist/film-list.component';
 import { MyFilmsComponent } from './components/myfilms/myfilms.component';
 import { FilmDetailsComponent } from './components/filmdetails/film-details.component';
 import { RegisterComponent } from './components/register/register.component';
-import { AlertComponent } from './components/_directives/alert.component';
+import { LoginComponent } from './components/login/login.component';
+
+import { AuthGuard } from './components/_guard/auth.guard';
 
 import { AuthenticationService } from './components/_services/authentication.service';
-import { AlertService } from './components/_services/alert.service';
 import { RegistrationService } from './components/_services/registration.service';
+import { MyFilmsService } from './components/_services/myfilms.service';
 
+
+import { NoUserFilmsPipe } from './components/_pipes/userfilm.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavMenuComponent,
         HomeComponent,
+        LoginComponent,
         FilmsComponent,
-        AlertComponent,
         MyFilmsComponent,
         FilmDetailsComponent,
-        RegisterComponent
+        RegisterComponent,
+        NoUserFilmsPipe
     ],
     imports: [
         CommonModule,
@@ -36,16 +41,17 @@ import { RegistrationService } from './components/_services/registration.service
         FormsModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
+            { path: 'home', component: HomeComponent, canActivate:[AuthGuard] },
+            { path: 'login', component: LoginComponent },
             { path: 'film-list', component: FilmsComponent },
-            { path: 'myfilms', component: MyFilmsComponent },
+            { path: 'myfilms', component: MyFilmsComponent, canActivate: [AuthGuard] },
             { path: 'film-details/:id', component: FilmDetailsComponent },
             { path: 'register', component: RegisterComponent},
             { path: '**', redirectTo: 'home' }
 			
         ])
     ],
-    providers: [AlertService, AuthenticationService, RegistrationService]
+    providers: [AuthGuard, AuthenticationService, RegistrationService, MyFilmsService]
     
 })
 export class AppModuleShared {

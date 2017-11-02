@@ -32,7 +32,7 @@ export class FilmDetailsComponent  {
         private http: Http, @Inject('BASE_URL') public baseUrl: string) { 
 
 
-            var currentUser = window.localStorage.getItem('currentUser');
+            var currentUser = window.sessionStorage.getItem('currentUser');
             if (currentUser != null) {
                 this.showadd = true;
             }
@@ -62,7 +62,7 @@ export class FilmDetailsComponent  {
 
 
     checkState(id: string) {
-        var currentUser = window.localStorage.getItem('currentUser');
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
             var user = JSON.parse(currentUser) as User;
             if (user.filmVisti.find(x => x == id) === undefined) {
@@ -73,21 +73,17 @@ export class FilmDetailsComponent  {
                 this.check = true;
             }
         }
-
     }
 
 
 
     addFilm(id: string) {
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
             var user = JSON.parse(currentUser) as User;
-            console.log(user.filmVisti);
             if (user.filmVisti.find(x => x == id) === undefined) {
                 user.filmVisti.push(id);
-                console.log(user.filmVisti);
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
                 this.regService.update(user)
                     .subscribe(
                     data => {
@@ -101,16 +97,12 @@ export class FilmDetailsComponent  {
     }
 
     removeFilm(id: string): void {
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser !== null) {
             var user = JSON.parse(currentUser) as User;
-            console.log(user.filmVisti);
-
             var index = user.filmVisti.indexOf(id);
             user.filmVisti.splice(index, 1);
-            console.log(user.filmVisti);
-            window.localStorage.setItem('currentUser', JSON.stringify(user));
+            window.sessionStorage.setItem('currentUser', JSON.stringify(user));
             this.regService.update(user);
             this.check = false;
         }

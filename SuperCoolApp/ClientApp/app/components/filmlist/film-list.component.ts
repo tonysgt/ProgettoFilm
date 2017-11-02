@@ -23,7 +23,7 @@ export class FilmsComponent {
         http: Http,
         @Inject('BASE_URL') baseUrl: string) {
         console.log(baseUrl + 'api/films');
-        var currentUser = window.localStorage.getItem('currentUser');
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
             this.showadd = true;
         }
@@ -41,24 +41,19 @@ export class FilmsComponent {
     }
 
     gotoDetail(id: string): void {
-        console.log(id);
         this.router.navigate(['/film-details', id]);
     }
 
     addToMyFilms(id: string): void {
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
             var user = JSON.parse(currentUser) as User;
-            console.log(user.filmVisti);
             if (user.filmVisti.find(x => x == id) === undefined) {
                 user.filmVisti.push(id);
-                console.log(user.filmVisti);
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
                 this.regService.update(user)
                     .subscribe(
                     data => {
-                        
                         this.router.navigate(['/myfilms']);
                     },
                     error => {

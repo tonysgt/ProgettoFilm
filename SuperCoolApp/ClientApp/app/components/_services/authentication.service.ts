@@ -12,21 +12,18 @@ export class AuthenticationService {
 
     login(email: string, password: string) {
         this.url = this.baseUrl + 'api/user/LogIn'; //post
-        //this.url = this.baseUrl + 'api/user/LogIn?email='+email+'&password='+password; //get
-
-       
         return this.http.post(this.url, JSON.stringify({ email: email, password: password }),{headers: this.headers })
             .map((response: Response) => {
                 let user = response.json();
-                window.localStorage.setItem('currentUser', JSON.stringify(user));
+                window.sessionStorage.setItem('currentUser', JSON.stringify(user));
                 return user;
             });
     }
 
     logout() {
         // remove user from local storage to log user out
-        if (typeof window.localStorage !== "undefined") {
-            window.localStorage.removeItem('currentUser');
+        if (typeof window.sessionStorage !== "undefined") {
+            window.sessionStorage.removeItem('currentUser');
         }
         return true;
     }

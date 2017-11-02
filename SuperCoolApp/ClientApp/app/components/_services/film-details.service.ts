@@ -9,7 +9,6 @@ export class FilmDetailsService{
 
     constructor(private http: Http, @Inject('BASE_URL') public baseUrl: string) { }
 
-
     getFilmDetails(id: number): Promise<Film> {
         const url = `${this.baseUrl}/api/film?IDFilm=${id}`;
         return this.http.get(url)

@@ -5,3 +5,32 @@
         max-width: 400px;
         padding-top: 10%;
 }
+
+button {
+    background-color: #0080ff;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    margin: 8px 4px;
+    display: inline-block;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    font-size: 12px;
+    width: 80px;
+}
+
+button:hover {
+   background-color: #0066cc;
+   color: white;
+   box-shadow: 0 4px 4px 0 rgba(0,0,0,0.24); /*, 0 17px 50px 0 rgba(0,0,0,0.19);*/
+}
+
+
+
+button:active {
+   background-color: #004c99;
+   box-shadow: 0 4px rgba(0,0,0,0.24);
+   transform: translateY(2px);
+}

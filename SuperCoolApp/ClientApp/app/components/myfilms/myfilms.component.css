@@ -3,12 +3,10 @@
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     
 }
-   
-   
-
 
 .filmtable img {
-    max-width: 80px;
+   max-width: 80px;
+       
 }
 
 .filmtable tr:nth-child(even) {

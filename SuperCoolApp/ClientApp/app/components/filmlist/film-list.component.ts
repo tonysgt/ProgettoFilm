@@ -14,7 +14,7 @@ export class FilmsComponent {
     public films: Film[];
     isadded = false;
     filterargs: string[]; 
-
+    showadd = false;
 
     constructor(
         private router: Router,
@@ -23,7 +23,16 @@ export class FilmsComponent {
         http: Http,
         @Inject('BASE_URL') baseUrl: string) {
         console.log(baseUrl + 'api/films');
-        
+        var currentUser = window.localStorage.getItem('currentUser');
+        if (currentUser != null) {
+            this.showadd = true;
+        }
+        else
+        {
+            this.showadd = false;
+        }
+
+
         http.get(baseUrl + 'api/films').subscribe(result => { //urlapi da definire
             this.films = result.json() as Film[];
         }, error => console.error(error));

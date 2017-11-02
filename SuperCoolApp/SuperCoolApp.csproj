@@ -9,8 +9,6 @@
 
   <ItemGroup>
     <None Remove="ClientApp\app\components\_models\user.ts" />
-    <None Remove="ClientApp\app\components\_pipes\userfilm.pipe.ts" />
-    <None Remove="ClientApp\app\components\_services\myfilms.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,8 +24,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\components\filmdetails\film-details.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\_models\user.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\_pipes\userfilm.pipe.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\_services\myfilms.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

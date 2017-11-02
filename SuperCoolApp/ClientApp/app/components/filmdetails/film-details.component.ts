@@ -1,11 +1,13 @@
 ﻿import { Component, Inject } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute,Router, ParamMap } from '@angular/router';
 import { Http } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/switchMap';
 
+
+import { RegistrationService } from '../_services/registration.service';
+
+import { User } from '../_models/user';
 import { Film } from '../_models/film';
 
 @Component({
@@ -22,7 +24,8 @@ export class FilmDetailsComponent  {
     constructor(
         private location: Location,
         private route: ActivatedRoute,
-        
+        private router: Router,
+        private regService: RegistrationService,
         private http: Http, @Inject('BASE_URL') public baseUrl: string) { 
             this.route.params.subscribe(params => {
                 this.id = params['id'];
@@ -44,5 +47,33 @@ export class FilmDetailsComponent  {
     goBack(): void {
         this.location.back();
     }
+
+    addFilm(id: string) {
+        var currentUser = window.localStorage.getItem('currentUser');
+        console.log(currentUser);
+        if (currentUser != null) {
+            var user = JSON.parse(currentUser) as User;
+            console.log(user.filmVisti);
+            if (user.filmVisti.find(x => x == id) === undefined) {
+                user.filmVisti.push(id);
+                console.log(user.filmVisti);
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.regService.update(user)
+                    .subscribe(
+                    data => {
+
+                        this.router.navigate(['/myfilms']);
+                    },
+                    error => {
+
+                    });
+            }
+            else {
+               
+                console.log("elemento già presente");
+            }
+        }
+    }
+    
 }
 

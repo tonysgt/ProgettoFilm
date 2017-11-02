@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { User } from '../_models/user';
 import { RegistrationService } from '../_services/registration.service';
-import { MyFilmsService } from '../_services/myfilms.service';
+
 
 @Component({
     selector: 'film-list',
@@ -19,7 +19,7 @@ export class FilmsComponent {
     constructor(
         private router: Router,
         private regService: RegistrationService,
-        private myFilmsService: MyFilmsService,
+        
         http: Http,
         @Inject('BASE_URL') baseUrl: string) {
         console.log(baseUrl + 'api/films');

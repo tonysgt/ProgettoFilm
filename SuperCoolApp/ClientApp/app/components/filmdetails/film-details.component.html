@@ -21,7 +21,7 @@
         <p>{{ film.descrizione}}</p>
         <div>
             <button (click)="goBack();">Back</button>
-            <button style="position:relative; float:right;">Add</button>
+            <button (click)="addFilm(film._id)" style="position:relative; float:right;">Add</button>
         </div>
     </div>   
 </div>

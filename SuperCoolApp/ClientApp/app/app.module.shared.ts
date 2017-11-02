@@ -18,10 +18,8 @@ import { AuthGuard } from './components/_guard/auth.guard';
 
 import { AuthenticationService } from './components/_services/authentication.service';
 import { RegistrationService } from './components/_services/registration.service';
-import { MyFilmsService } from './components/_services/myfilms.service';
 
 
-import { NoUserFilmsPipe } from './components/_pipes/userfilm.pipe';
 
 @NgModule({
     declarations: [
@@ -32,8 +30,7 @@ import { NoUserFilmsPipe } from './components/_pipes/userfilm.pipe';
         FilmsComponent,
         MyFilmsComponent,
         FilmDetailsComponent,
-        RegisterComponent,
-        NoUserFilmsPipe
+        RegisterComponent
     ],
     imports: [
         CommonModule,
@@ -51,7 +48,7 @@ import { NoUserFilmsPipe } from './components/_pipes/userfilm.pipe';
 			
         ])
     ],
-    providers: [AuthGuard, AuthenticationService, RegistrationService, MyFilmsService]
+    providers: [AuthGuard, AuthenticationService, RegistrationService]
     
 })
 export class AppModuleShared {

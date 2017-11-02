@@ -16,7 +16,7 @@
         <tr  *ngFor="let film of films">
             <td class="col1" ><img src="{{film.copertina}}"></td>
             <td class="col2" >{{ film.nomeFilm }}</td>
-            <td><button (click)="gotoDetail(film._id)">Info</button><button (click)="addToMyFilms(film._id)" *ngIf="showadd">Add</button></td>
+            <td><button (click)="gotoDetail(film._id)">Info</button><button (click)="addToMyFilms(film._id)" *ngIf="showadd">Aggiungi</button></td>
         </tr>
     </tbody>
 </table>

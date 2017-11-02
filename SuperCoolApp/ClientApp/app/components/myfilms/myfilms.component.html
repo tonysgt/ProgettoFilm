@@ -1,7 +1,7 @@
-<h1>I miei film</h1>
+<h1>I miei film<span  *ngIf="films"> ({{films.length}})</span></h1>
 
 <p *ngIf="!films"><em>Non hai aggiunto nessun film</em></p>
-
+<input type="text" [(ngModel)]="ricerca" placeholder="Cerca Film" *ngIf="films">
 <table class='filmtable' *ngIf="films">
     <thead>
         <tr>
@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let film of films">
+        <tr *ngFor="let film of films | myfilter:ricerca">
             <td class="col1"><img src="{{film.copertina}}"></td>
             <td class="col2">{{ film.nomeFilm }}</td>
             <td><button (click)="gotoDetail(film._id)">Info</button><button (click)="removeFromMyFilms(film._id)">Rimuovi</button></td>

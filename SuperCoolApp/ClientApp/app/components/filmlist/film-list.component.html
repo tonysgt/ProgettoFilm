@@ -1,0 +1,22 @@
+<h1>Lista Film</h1>
+
+<p *ngIf="!films"><em>Loading...</em></p>
+<div *ngIf="isadded" class="alert alert-warning">
+    <strong>Il film &#232; gi&#224; presente nella tua lista</strong>
+</div>
+<table class='testtable' *ngIf="films">
+    <thead>
+        <tr>
+            <th>Locandina</th>
+            <th>Titolo film</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  *ngFor="let film of films">
+            <td class="col1" ><img src="http://cultura.biografieonline.it/wp-content/uploads/2012/05/Titanic-locandina-film.jpg"></td>
+            <td class="col2" >{{ film.nomeFilm }}</td>
+            <td><button (click)="gotoDetail(film._id)">Info</button><button (click)="addToMyFilms(film._id)">Add</button></td>
+        </tr>
+    </tbody>
+</table>

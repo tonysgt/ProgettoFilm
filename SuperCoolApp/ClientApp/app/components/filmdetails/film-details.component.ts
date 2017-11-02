@@ -21,6 +21,8 @@ export class FilmDetailsComponent  {
     id: string;
     url: string;
     check = false;
+    showadd = false;
+   
 
     constructor(
         private location: Location,
@@ -28,6 +30,15 @@ export class FilmDetailsComponent  {
         private router: Router,
         private regService: RegistrationService,
         private http: Http, @Inject('BASE_URL') public baseUrl: string) { 
+
+
+            var currentUser = window.localStorage.getItem('currentUser');
+            if (currentUser != null) {
+                this.showadd = true;
+            }
+            else {
+                this.showadd = false;
+            }
             this.route.params.subscribe(params => {
                 this.id = params['id'];
                 this.url = this.baseUrl + 'api/film?IDFilm=' + this.id;
@@ -81,15 +92,10 @@ export class FilmDetailsComponent  {
                     .subscribe(
                     data => {
                         this.check = true;
-                        //this.router.navigate(['/myfilms']);
                     },
                     error => {
 
                     });
-            }
-            else {
-               
-                console.log("elemento già presente");
             }
         }
     }

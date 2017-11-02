@@ -21,8 +21,8 @@
         <p>{{ film.descrizione}}</p>
         <div>
             <button (click)="goBack();">Back</button>
-            <button (click)="removeFilm(film._id)" style="position:relative; float:right;" *ngIf="check">Remove</button>
-            <button (click)="addFilm(film._id)" style="position:relative; float:right;" *ngIf="!check">Add</button>
+            <button (click)="removeFilm(film._id)" style="position:relative; float:right;" *ngIf="check&&showadd">Remove</button>
+            <button (click)="addFilm(film._id)" style="position:relative; float:right;" *ngIf="!check&&showadd">Add</button>
         </div>
     </div>   
 </div>

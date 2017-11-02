@@ -62,13 +62,11 @@ export class FilmsComponent {
                         this.router.navigate(['/myfilms']);
                     },
                     error => {
-                        
                     });
             }
             else
             {
                 this.isadded = true;
-                console.log("elemento già presente");
             }
         }
     }

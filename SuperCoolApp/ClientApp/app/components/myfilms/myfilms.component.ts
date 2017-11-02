@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { RegistrationService } from '../_services/registration.service';
 
+import { Film } from '../_models/film';
 import { User } from '../_models/user';
 
 @Component({
@@ -14,7 +15,6 @@ import { User } from '../_models/user';
 export class MyFilmsComponent {
     public films: Film[];
     user: User;
-    
     filmvisti: string[]
 
 
@@ -23,6 +23,10 @@ export class MyFilmsComponent {
         private regService: RegistrationService,
         private http: Http, @Inject('BASE_URL') private baseUrl: string) {
         this.getFilms();
+    }
+
+    gotoDetail(id: number): void {
+        this.router.navigate(['/film-details', id]);
     }
 
     getFilms(): void {
@@ -45,9 +49,7 @@ export class MyFilmsComponent {
         }
     }
 
-    gotoDetail(id: number): void {
-        this.router.navigate(['/film-details', id]);
-    }
+    
 
     getFilmID(): void {
         var currentUser = window.localStorage.getItem('currentUser');
@@ -88,15 +90,6 @@ export class MyFilmsComponent {
     }
 }
 
-interface Film {
-    _id: string;
-    NomeFilm: string;
-    Descrizione: string;
-    Durata: number;
-    Regista: string;
-    Categoria: string;
-    Anno: number;
-    Copertina: any;
-}
+
 
 

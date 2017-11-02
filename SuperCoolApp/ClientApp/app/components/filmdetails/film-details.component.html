@@ -5,7 +5,7 @@
 <div *ngIf="film">
     <div class="row">
         <div class="col-sm-4">
-            <img src="http://cultura.biografieonline.it/wp-content/uploads/2012/05/Titanic-locandina-film.jpg" class="img-responsive">
+            <img src="{{film.copertina}}" class="img-responsive">
         </div>
         <div id="filminfo" class="col-sm-7">
             <ul>
@@ -21,7 +21,8 @@
         <p>{{ film.descrizione}}</p>
         <div>
             <button (click)="goBack();">Back</button>
-            <button (click)="addFilm(film._id)" style="position:relative; float:right;">Add</button>
+            <button (click)="removeFilm(film._id)" style="position:relative; float:right;" *ngIf="check">Remove</button>
+            <button (click)="addFilm(film._id)" style="position:relative; float:right;" *ngIf="!check">Add</button>
         </div>
     </div>   
 </div>

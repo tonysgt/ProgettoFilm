@@ -109,6 +109,7 @@ namespace SuperCoolApp.Controllers
                 }
                 else
                 {
+                    
                     return StatusCode(StatusCodes.Status500InternalServerError, httpResponse.ReasonPhrase);
                 }
 

@@ -1,10 +1,10 @@
 ﻿export class Film { //Per la gestione dei dettagli di un film
-    filmID: number;
-    nomeFilm: string;
-    genere: string;
-    regista: string;
-    descrizione: string;
-    durata: number;
-    anno: number;
-    visti: any;
+    _id: string;
+    NomeFilm: string;
+    Descrizione: string;
+    Durata: number;
+    Regista: string;
+    Categoria: string;
+    Anno: number;
+    Copertina: any;
 }

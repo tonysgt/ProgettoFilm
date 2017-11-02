@@ -20,6 +20,7 @@ export class FilmDetailsComponent  {
     film: Film;
     id: string;
     url: string;
+    check = false;
 
     constructor(
         private location: Location,
@@ -30,7 +31,7 @@ export class FilmDetailsComponent  {
             this.route.params.subscribe(params => {
                 this.id = params['id'];
                 this.url = this.baseUrl + 'api/film?IDFilm=' + this.id;
-                
+                this.checkState(this.id);
                 this.http.get(this.url).subscribe(result => { //urlapi da definire
                 this.film = result.json() as Film;
                     }, error => console.error(error));
@@ -48,6 +49,24 @@ export class FilmDetailsComponent  {
         this.location.back();
     }
 
+
+    checkState(id: string) {
+        var currentUser = window.localStorage.getItem('currentUser');
+        if (currentUser != null) {
+            var user = JSON.parse(currentUser) as User;
+            if (user.filmVisti.find(x => x == id) === undefined) {
+                this.check = false;
+            }
+            else
+            {
+                this.check = true;
+            }
+        }
+
+    }
+
+
+
     addFilm(id: string) {
         var currentUser = window.localStorage.getItem('currentUser');
         console.log(currentUser);
@@ -61,8 +80,8 @@ export class FilmDetailsComponent  {
                 this.regService.update(user)
                     .subscribe(
                     data => {
-
-                        this.router.navigate(['/myfilms']);
+                        this.check = true;
+                        //this.router.navigate(['/myfilms']);
                     },
                     error => {
 
@@ -72,6 +91,22 @@ export class FilmDetailsComponent  {
                
                 console.log("elemento già presente");
             }
+        }
+    }
+
+    removeFilm(id: string): void {
+        var currentUser = window.localStorage.getItem('currentUser');
+        console.log(currentUser);
+        if (currentUser !== null) {
+            var user = JSON.parse(currentUser) as User;
+            console.log(user.filmVisti);
+
+            var index = user.filmVisti.indexOf(id);
+            user.filmVisti.splice(index, 1);
+            console.log(user.filmVisti);
+            window.localStorage.setItem('currentUser', JSON.stringify(user));
+            this.regService.update(user);
+            this.check = false;
         }
     }
     

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using ServiceAPI.Dal;
+using System;
 
 namespace ServiceAPI
 {
@@ -7,17 +7,18 @@ namespace ServiceAPI
     {
         static void Main(string[] args)
         {
-            using (var context = new ProgettoDbContext())
+            /*using (var context = new ProgettoDbContext())
             {
                 context.Database.EnsureCreated();
-            }
+            }*/
+
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseStartup<Startup>()
                 .Build();
 
             host.Run();
-
+            
         }
     }
 }

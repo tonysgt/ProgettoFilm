@@ -1,0 +1,73 @@
+﻿.filmtable {
+    border-collapse: collapse;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    
+}
+   
+   
+
+
+.filmtable img {
+    max-width: 80px;
+}
+
+.filmtable tr:nth-child(even) {
+   background-color: #f2f2f2
+}
+
+.filmtable td, .filmtable th {
+   border: 1px solid #E0E0E0;
+   padding: 4px;
+}
+
+.filmtable th {
+   padding-top: 12px;
+   padding-bottom: 12px;
+   text-align: left;
+   background-color: #0080ff;
+   color: white;
+}
+
+
+
+.filmtable td {
+   font-size: 20px;
+}
+
+.filmtable button {
+    background-color: #0080ff;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    margin: 8px 4px;
+    display: inline-block;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    font-size: 12px;
+    width: 80px;
+}
+
+.filmtable button:hover {
+        background-color: #0066cc;
+        color: white;
+        box-shadow: 0 4px 4px 0 rgba(0,0,0,0.24);/*, 0 17px 50px 0 rgba(0,0,0,0.19);*/
+ }
+
+
+
+    .filmtable button:active {
+        background-color: #004c99;
+        box-shadow: 0 4px rgba(0,0,0,0.24);
+        transform: translateY(2px);
+    }
+.col1 {
+    white-space: nowrap;
+}
+
+.col2{
+    width: 100%;
+}
+ 
+

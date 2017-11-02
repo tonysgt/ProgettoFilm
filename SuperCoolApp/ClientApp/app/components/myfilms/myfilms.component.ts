@@ -52,39 +52,27 @@ export class MyFilmsComponent {
     
 
     getFilmID(): void {
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser !== null)
         {
            this.user = JSON.parse(currentUser) as User;
-           console.log(this.user.filmVisti);
            this.filmvisti = this.user.filmVisti;
         }
-        
-
     }
 
     removeFromMyFilms(id: string): void {
-
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser !== null) {
             var user = JSON.parse(currentUser) as User;
-            console.log(user.filmVisti);
-           
             var index = user.filmVisti.indexOf(id);
             user.filmVisti.splice(index, 1);
-            console.log(user.filmVisti);
-            window.localStorage.setItem('currentUser', JSON.stringify(user));
+            window.sessionStorage.setItem('currentUser', JSON.stringify(user));
             this.regService.update(user)
                 .subscribe(
                 data => {
-                    //this.alertService.success('Registration successful', true);
                     this.getFilms();
                 },
                 error => {
-                    //this.alertService.error(error);
-                    //this.loading = false;
                 });
         }
     }

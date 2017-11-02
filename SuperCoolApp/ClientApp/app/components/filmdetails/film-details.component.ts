@@ -21,6 +21,8 @@ export class FilmDetailsComponent  {
     id: string;
     url: string;
     check = false;
+    showadd = false;
+   
 
     constructor(
         private location: Location,
@@ -28,6 +30,15 @@ export class FilmDetailsComponent  {
         private router: Router,
         private regService: RegistrationService,
         private http: Http, @Inject('BASE_URL') public baseUrl: string) { 
+
+
+            var currentUser = window.sessionStorage.getItem('currentUser');
+            if (currentUser != null) {
+                this.showadd = true;
+            }
+            else {
+                this.showadd = false;
+            }
             this.route.params.subscribe(params => {
                 this.id = params['id'];
                 this.url = this.baseUrl + 'api/film?IDFilm=' + this.id;
@@ -51,7 +62,7 @@ export class FilmDetailsComponent  {
 
 
     checkState(id: string) {
-        var currentUser = window.localStorage.getItem('currentUser');
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
             var user = JSON.parse(currentUser) as User;
             if (user.filmVisti.find(x => x == id) === undefined) {
@@ -62,49 +73,36 @@ export class FilmDetailsComponent  {
                 this.check = true;
             }
         }
-
     }
 
 
 
     addFilm(id: string) {
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
             var user = JSON.parse(currentUser) as User;
-            console.log(user.filmVisti);
             if (user.filmVisti.find(x => x == id) === undefined) {
                 user.filmVisti.push(id);
-                console.log(user.filmVisti);
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
                 this.regService.update(user)
                     .subscribe(
                     data => {
                         this.check = true;
-                        //this.router.navigate(['/myfilms']);
                     },
                     error => {
 
                     });
             }
-            else {
-               
-                console.log("elemento già presente");
-            }
         }
     }
 
     removeFilm(id: string): void {
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser !== null) {
             var user = JSON.parse(currentUser) as User;
-            console.log(user.filmVisti);
-
             var index = user.filmVisti.indexOf(id);
             user.filmVisti.splice(index, 1);
-            console.log(user.filmVisti);
-            window.localStorage.setItem('currentUser', JSON.stringify(user));
+            window.sessionStorage.setItem('currentUser', JSON.stringify(user));
             this.regService.update(user);
             this.check = false;
         }

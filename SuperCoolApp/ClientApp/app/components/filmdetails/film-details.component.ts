@@ -20,6 +20,9 @@ export class FilmDetailsComponent  {
     film: Film;
     id: string;
     url: string;
+    check = false;
+    showadd = false;
+   
 
     constructor(
         private location: Location,
@@ -27,10 +30,19 @@ export class FilmDetailsComponent  {
         private router: Router,
         private regService: RegistrationService,
         private http: Http, @Inject('BASE_URL') public baseUrl: string) { 
+
+
+            var currentUser = window.sessionStorage.getItem('currentUser');
+            if (currentUser != null) {
+                this.showadd = true;
+            }
+            else {
+                this.showadd = false;
+            }
             this.route.params.subscribe(params => {
                 this.id = params['id'];
                 this.url = this.baseUrl + 'api/film?IDFilm=' + this.id;
-                
+                this.checkState(this.id);
                 this.http.get(this.url).subscribe(result => { //urlapi da definire
                 this.film = result.json() as Film;
                     }, error => console.error(error));
@@ -40,7 +52,7 @@ export class FilmDetailsComponent  {
 
    
     private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
+       
         return Promise.reject(error.message || error);
     }
 
@@ -48,30 +60,52 @@ export class FilmDetailsComponent  {
         this.location.back();
     }
 
-    addFilm(id: string) {
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
+    //controlla se un utente è collegato o meno e disattiva alcuni button se non vi è un utente on
+    checkState(id: string) {
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
             var user = JSON.parse(currentUser) as User;
-            console.log(user.filmVisti);
+            if (user.filmVisti.find(x => x == id) === undefined) {
+                this.check = false;
+            }
+            else
+            {
+                this.check = true;
+            }
+        }
+    }
+
+
+     //aggiunge il film alla lista dei miei film
+    addFilm(id: string) {
+        var currentUser = window.sessionStorage.getItem('currentUser');
+        if (currentUser != null) {
+            var user = JSON.parse(currentUser) as User;
             if (user.filmVisti.find(x => x == id) === undefined) {
                 user.filmVisti.push(id);
-                console.log(user.filmVisti);
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.regService.update(user)
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
+                this.regService.update(user) //viene richiamato il service che si occuperà di salvare la modifica sul server remoto
                     .subscribe(
                     data => {
-
-                        this.router.navigate(['/myfilms']);
+                        this.check = true;
                     },
                     error => {
 
                     });
             }
-            else {
-               
-                console.log("elemento già presente");
-            }
+        }
+    }
+
+    //rimuove un film dai miei film
+    removeFilm(id: string): void {
+        var currentUser = window.sessionStorage.getItem('currentUser');
+        if (currentUser !== null) {
+            var user = JSON.parse(currentUser) as User;
+            var index = user.filmVisti.indexOf(id);
+            user.filmVisti.splice(index, 1);
+            window.sessionStorage.setItem('currentUser', JSON.stringify(user));
+            this.regService.update(user); //viene richiamato il service che si occuperà di salvare la modifica sul server remoto
+            this.check = false;
         }
     }
     

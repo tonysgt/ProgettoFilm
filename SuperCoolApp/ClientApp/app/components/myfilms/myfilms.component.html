@@ -1,7 +1,7 @@
-<h1>I miei film</h1>
+<h1>I miei film<span  *ngIf="films"> ({{films.length}})</span></h1>
 
 <p *ngIf="!films"><em>Non hai aggiunto nessun film</em></p>
-
+<input type="text" [(ngModel)]="ricerca" placeholder="Cerca Film" *ngIf="films">
 <table class='filmtable' *ngIf="films">
     <thead>
         <tr>
@@ -11,26 +11,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let film of films">
-            <td class="col1"><img src="http://cultura.biografieonline.it/wp-content/uploads/2012/05/Titanic-locandina-film.jpg"></td>
+        <tr *ngFor="let film of films | myfilter:ricerca">
+            <td class="col1"><img src="{{film.copertina}}"></td>
             <td class="col2">{{ film.nomeFilm }}</td>
-            <td><button (click)="gotoDetail(film._id)">Info</button><button (click)="removeFromMyFilms(film._id)">Remove</button></td>
+            <td><button (click)="gotoDetail(film._id)">Info</button><button (click)="removeFromMyFilms(film._id)">Rimuovi</button></td>
         </tr>
     </tbody>
 </table>
-<!--<table class='filmtable' >
-    <thead>
-        <tr>
-            <th>Locandina</th>
-            <th>Titolo film</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="col1"><img src="http://cultura.biografieonline.it/wp-content/uploads/2012/05/Titanic-locandina-film.jpg"></td>
-            <td class="col2">Titanic di prova</td>
-            <td><button (click)="gotoDetail(4)">Info</button><button>Remove</button></td>
-        </tr>
-    </tbody>
-</table>-->

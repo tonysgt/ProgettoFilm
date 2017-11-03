@@ -1,7 +1,4 @@
-﻿/** {
-    box-sizing: border-box;
-}*/
-ul {
+﻿ul {
     
     list-style-type: none;
     padding: 0;
@@ -39,8 +36,6 @@ li {
 
 @media only screen and (min-width: 768px) {
     .img-responsive {
-        /*max-height: 300px;*/
-      
         min-height: 200px;
         max-height:300px;
         width: auto;

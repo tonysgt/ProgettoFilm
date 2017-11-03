@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { RegistrationService } from '../_services/registration.service';
 
+import { Film } from '../_models/film';
 import { User } from '../_models/user';
 
 @Component({
@@ -12,9 +13,8 @@ import { User } from '../_models/user';
     styleUrls: ['./myfilms.component.css']
 })
 export class MyFilmsComponent {
-    public films: Film[];
+    public films: Film[] | undefined;
     user: User;
-    
     filmvisti: string[]
 
 
@@ -25,6 +25,13 @@ export class MyFilmsComponent {
         this.getFilms();
     }
 
+    //richiama la pagina dei dettagli
+    gotoDetail(id: number): void {
+        this.router.navigate(['/film-details', id]);
+    }
+
+
+    //effettua la richiesta dei film visti da un utente
     getFilms(): void {
         this.getFilmID();
         var query = "?";
@@ -38,65 +45,48 @@ export class MyFilmsComponent {
                     query += "IDFilms=" + filmvisto + "&";
                 }
             }
-            console.log(this.baseUrl + 'api/films/many' + query);
             this.http.get(this.baseUrl + 'api/films/many' + query).subscribe(result => { //api da definire
                 this.films = result.json() as Film[];
             }, error => console.error(error));
         }
-    }
-
-    gotoDetail(id: number): void {
-        this.router.navigate(['/film-details', id]);
-    }
-
-    getFilmID(): void {
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
-        if (currentUser !== null)
+        else
         {
-           this.user = JSON.parse(currentUser) as User;
-           console.log(this.user.filmVisti);
-           this.filmvisti = this.user.filmVisti;
+            this.films = undefined;
         }
         
 
     }
 
-    removeFromMyFilms(id: string): void {
+    
+    //restituisce gli id dei film visti dall'utente
+    getFilmID(): void {
+        var currentUser = window.sessionStorage.getItem('currentUser');
+        if (currentUser !== null)
+        {
+           this.user = JSON.parse(currentUser) as User;
+           this.filmvisti = this.user.filmVisti;
+        }
+    }
 
-        var currentUser = window.localStorage.getItem('currentUser');
-        console.log(currentUser);
+    //rimuove un film dalla lista
+    removeFromMyFilms(id: string): void {
+        var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser !== null) {
             var user = JSON.parse(currentUser) as User;
-            console.log(user.filmVisti);
-           
             var index = user.filmVisti.indexOf(id);
             user.filmVisti.splice(index, 1);
-            console.log(user.filmVisti);
-            window.localStorage.setItem('currentUser', JSON.stringify(user));
+            window.sessionStorage.setItem('currentUser', JSON.stringify(user));
             this.regService.update(user)
                 .subscribe(
                 data => {
-                    //this.alertService.success('Registration successful', true);
                     this.getFilms();
                 },
                 error => {
-                    //this.alertService.error(error);
-                    //this.loading = false;
                 });
         }
     }
 }
 
-interface Film {
-    _id: string;
-    NomeFilm: string;
-    Descrizione: string;
-    Durata: number;
-    Regista: string;
-    Categoria: string;
-    Anno: number;
-    Copertina: any;
-}
+
 
 

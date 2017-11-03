@@ -1,4 +1,4 @@
-﻿export class User {
+﻿export class User { //classe che descrive l'utente
     id: string;
     Nome: string;
     Cognome: string;

@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
     returnUrl: string;
     user: User;
 
-
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -26,8 +25,11 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        var currentUser = window.sessionStorage.getItem('currentUser');
+        if (currentUser != null) {
+            this.user = JSON.parse(currentUser) as User;
+        }
     }
-
 
     logout() {
         this.authenticationService.logout();

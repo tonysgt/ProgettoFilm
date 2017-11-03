@@ -6,6 +6,7 @@
 
 .testtable img {
     max-width: 80px;
+    max-height: 300px;
 }
 
 .testtable tr:nth-child(even) {
@@ -31,7 +32,7 @@
    font-size: 20px;
 }
 
-.testtable button {
+    .testtable button {
         background-color: #0080ff;
         border: none;
         color: white;
@@ -39,6 +40,7 @@
         text-align: center;
         text-decoration: none;
         margin: 8px 4px;
+        padding: 10px 24px;
         display: inline-block;
         -webkit-transition-duration: 0.4s;
         -moz-transition-duration: 0.4s;
@@ -46,7 +48,7 @@
         transition-duration: 0.4s;
         font-size: 12px;
         width: 80px;
-}
+    }
 
 .testtable button:hover {
         background-color: #0066cc;

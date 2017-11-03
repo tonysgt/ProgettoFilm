@@ -13,7 +13,7 @@ import { User } from '../_models/user';
     styleUrls: ['./myfilms.component.css']
 })
 export class MyFilmsComponent {
-    public films: Film[];
+    public films: Film[] | undefined;
     user: User;
     filmvisti: string[]
 
@@ -25,10 +25,13 @@ export class MyFilmsComponent {
         this.getFilms();
     }
 
+    //richiama la pagina dei dettagli
     gotoDetail(id: number): void {
         this.router.navigate(['/film-details', id]);
     }
 
+
+    //effettua la richiesta dei film visti da un utente
     getFilms(): void {
         this.getFilmID();
         var query = "?";
@@ -46,16 +49,16 @@ export class MyFilmsComponent {
                 this.films = result.json() as Film[];
             }, error => console.error(error));
         }
-        //else
-        //{
-        //    this.films = new Array<Film>();
-        //}
+        else
+        {
+            this.films = undefined;
+        }
         
 
     }
 
     
-
+    //restituisce gli id dei film visti dall'utente
     getFilmID(): void {
         var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser !== null)
@@ -65,6 +68,7 @@ export class MyFilmsComponent {
         }
     }
 
+    //rimuove un film dalla lista
     removeFromMyFilms(id: string): void {
         var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser !== null) {

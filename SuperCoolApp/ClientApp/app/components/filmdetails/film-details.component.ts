@@ -52,7 +52,7 @@ export class FilmDetailsComponent  {
 
    
     private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
+       
         return Promise.reject(error.message || error);
     }
 
@@ -60,7 +60,7 @@ export class FilmDetailsComponent  {
         this.location.back();
     }
 
-
+    //controlla se un utente è collegato o meno e disattiva alcuni button se non vi è un utente on
     checkState(id: string) {
         var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
@@ -76,7 +76,7 @@ export class FilmDetailsComponent  {
     }
 
 
-
+     //aggiunge il film alla lista dei miei film
     addFilm(id: string) {
         var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
@@ -84,7 +84,7 @@ export class FilmDetailsComponent  {
             if (user.filmVisti.find(x => x == id) === undefined) {
                 user.filmVisti.push(id);
                 sessionStorage.setItem('currentUser', JSON.stringify(user));
-                this.regService.update(user)
+                this.regService.update(user) //viene richiamato il service che si occuperà di salvare la modifica sul server remoto
                     .subscribe(
                     data => {
                         this.check = true;
@@ -96,6 +96,7 @@ export class FilmDetailsComponent  {
         }
     }
 
+    //rimuove un film dai miei film
     removeFilm(id: string): void {
         var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser !== null) {
@@ -103,7 +104,7 @@ export class FilmDetailsComponent  {
             var index = user.filmVisti.indexOf(id);
             user.filmVisti.splice(index, 1);
             window.sessionStorage.setItem('currentUser', JSON.stringify(user));
-            this.regService.update(user);
+            this.regService.update(user); //viene richiamato il service che si occuperà di salvare la modifica sul server remoto
             this.check = false;
         }
     }

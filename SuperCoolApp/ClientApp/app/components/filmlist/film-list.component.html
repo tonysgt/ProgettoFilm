@@ -1,8 +1,21 @@
 <h1>Lista Film</h1>
 <p *ngIf="!films"><em>Loading...</em></p>
-<div *ngIf="isadded" class="alert alert-warning">
-    <strong>Il film &#232; gi&#224; presente nella tua lista</strong>
-</div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Attenzione!</h4>
+            </div>
+            <div class="modal-body">
+                <p><strong>Il film &#232; gi&#224; presente nella tua lista</strong></p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal !-->
+
+
 <input type="text" [(ngModel)]="ricerca" placeholder="Cerca Film">
 <table class='testtable' *ngIf="films">
     <thead>

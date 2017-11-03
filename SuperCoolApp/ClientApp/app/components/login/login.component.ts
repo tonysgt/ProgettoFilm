@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
             data => {
+                //ritorna alla route da cui è stato reindirizzato
                 this.router.navigate([this.returnUrl]);
                 
             },

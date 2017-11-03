@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '../_models/user';
 import { RegistrationService } from '../_services/registration.service';
 import { Pipe, PipeTransform } from '@angular/core';
+import { Film } from '../_models/film';
 
 @Component({
     selector: 'film-list',
@@ -12,9 +13,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilmsComponent {
     public films: Film[];
-    isadded = false;
     filterargs: string[]; 
     showadd = false;
+    display = 'none';
 
     constructor(
         private router: Router,
@@ -31,8 +32,6 @@ export class FilmsComponent {
         {
             this.showadd = false;
         }
-
-
         http.get(baseUrl + 'api/films').subscribe(result => { //urlapi da definire
             this.films = result.json() as Film[];
         }, error => console.error(error));
@@ -40,10 +39,12 @@ export class FilmsComponent {
        
     }
 
+    //
     gotoDetail(id: string): void {
         this.router.navigate(['/film-details', id]);
     }
 
+    //aggiunge il film nella lista dei miei film
     addToMyFilms(id: string): void {
         var currentUser = window.sessionStorage.getItem('currentUser');
         if (currentUser != null) {
@@ -61,11 +62,24 @@ export class FilmsComponent {
             }
             else
             {
-                this.isadded = true;
+                this.openModal();
             }
         }
     }
+
+    openModal() {
+
+        this.display = 'block';
+
+    }
+
+    onCloseHandled() {
+
+        this.display = 'none';
+
+    }
 }
+
 
 @Pipe({
     name: 'myfilter',
@@ -86,16 +100,4 @@ export class MyFilterPipe implements PipeTransform {
             return false;
         });
     }
-}
-
-
-class Film { //Per la gestione dei dettagli di un film
-    _id: string;
-    NomeFilm: string;
-    Descrizione: string;
-    Durata: number;
-    Regista: string;
-    Categoria: string;
-    Anno: number;
-    Copertina: any;
 }

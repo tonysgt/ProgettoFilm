@@ -42,11 +42,16 @@ export class MyFilmsComponent {
                     query += "IDFilms=" + filmvisto + "&";
                 }
             }
-            console.log(this.baseUrl + 'api/films/many' + query);
             this.http.get(this.baseUrl + 'api/films/many' + query).subscribe(result => { //api da definire
                 this.films = result.json() as Film[];
             }, error => console.error(error));
         }
+        //else
+        //{
+        //    this.films = new Array<Film>();
+        //}
+        
+
     }
 
     

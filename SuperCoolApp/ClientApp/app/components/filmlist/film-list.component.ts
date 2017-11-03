@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { User } from '../_models/user';
 import { RegistrationService } from '../_services/registration.service';
-
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
     selector: 'film-list',
@@ -67,7 +67,26 @@ export class FilmsComponent {
     }
 }
 
+@Pipe({
+    name: 'myfilter',
+    pure: false
+})
+export class MyFilterPipe implements PipeTransform {
+    transform(items: any[], criteria: string): any {
 
+        if (!items || !criteria)
+            return items;
+
+        return items.filter(item => {
+            for (let key in item) {
+                if (("" + item[key]).toLowerCase().includes(criteria.toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+}
 
 
 class Film { //Per la gestione dei dettagli di un film

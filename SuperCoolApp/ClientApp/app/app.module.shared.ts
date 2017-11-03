@@ -19,7 +19,7 @@ import { AuthGuard } from './components/_guard/auth.guard';
 import { AuthenticationService } from './components/_services/authentication.service';
 import { RegistrationService } from './components/_services/registration.service';
 
-
+import { MyFilterPipe } from './components/filmlist/film-list.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +30,8 @@ import { RegistrationService } from './components/_services/registration.service
         FilmsComponent,
         MyFilmsComponent,
         FilmDetailsComponent,
-        RegisterComponent
+        RegisterComponent,
+        MyFilterPipe
     ],
     imports: [
         CommonModule,
